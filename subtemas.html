@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Subtemas</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #121212;
+      color: #fff;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #1f1f1f;
+      padding: 1rem;
+      text-align: center;
+    }
+    h1 {
+      margin: 0;
+      font-size: 2rem;
+    }
+    .categoria {
+      font-size: 1.5rem;
+      text-align: center;
+      margin-top: 1rem;
+    }
+    .subtema {
+      background-color: #1e1e1e;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+    .subtema:hover {
+      background-color: #2c2c2c;
+    }
+    .crear-subtema {
+      display: block;
+      width: 100%;
+      padding: 1rem;
+      margin-top: 1rem;
+      background-color: #444;
+      border: none;
+      border-radius: 5px;
+      color: #fff;
+      cursor: pointer;
+    }
+    .crear-subtema:hover {
+      background-color: #555;
+    }
+    .codigo-unirse {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Subtemas</h1>
+  </header>
+
+  <div class="categoria" id="categoriaTitulo"></div>
+
+  <div id="subtemasLista">
+    <!-- Aquí se mostrarán los subtemas dinámicamente -->
+  </div>
+
+  <button class="crear-subtema" onclick="crearSubtema()">Crear Subtema</button>
+
+  <!-- Formulario para crear un subtema -->
+  <div id="formCrear" style="display: none;">
+    <input type="text" id="nombreSubtema" placeholder="Nombre del subtema">
+    <select id="tipoSubtema">
+      <option value="publico">Público</option>
+      <option value="privado">Privado</option>
+    </select>
+    <button onclick="guardarSubtema()">Guardar</button>
+  </div>
+
+  <!-- Formulario para unirse a un subtema privado -->
+  <div id="codigoUnirse" class="codigo-unirse">
+    <input type="text" id="codigo" placeholder="Introduce el código para unirte">
+    <button onclick="unirseSubtema()">Unirse</button>
+  </div>
+
+  <script>
+    // Obtiene el nombre de la categoría de la URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const categoria = urlParams.get('categoria');
+    document.getElementById("categoriaTitulo").textContent = `Categoría: ${categoria.charAt(0).toUpperCase() + categoria.slice(1)}`;
+
+    // Simulando subtemas pre-creados
+    const subtemas = {
+      tecnologia: [{ nombre: "Robótica", tipo: "publico" }, { nombre: "IoT", tipo: "privado", codigo: "1234" }],
+      videojuegos: [{ nombre: "FPS", tipo: "publico" }, { nombre: "RPG", tipo: "privado", codigo: "abcd" }],
+    };
+
+    // Mostrar los subtemas según la categoría
+    function mostrarSubtemas() {
+      const listaSubtemas = subtemas[categoria];
+      const subtemasLista = document.getElementById("subtemasLista");
+      subtemasLista.innerHTML = ""; // Limpiar subtemas previos
+
+      listaSubtemas.forEach(subtema => {
+        const div = document.createElement("div");
+        div.className = "subtema";
+        div.textContent = `${subtema.nombre} (${subtema.tipo})`;
+        if (subtema.tipo === "privado") {
+          div.innerHTML += ` <button onclick="mostrarCodigo('${subtema.codigo}')">Unirse</button>`;
+        } else {
+          div.onclick = function() {
+            alert(`Te has unido al subtema de ${subtema.nombre}`);
+          };
+        }
+        subtemasLista.appendChild(div);
+      });
+    }
+
+    function crearSubtema() {
+      document.getElementById("formCrear").style.display = "block";
+    }
+
+    function guardarSubtema() {
+      const nombre = document.getElementById("nombreSubtema").value;
+      const tipo = document.getElementById("tipoSubtema").value;
+      subtemas[categoria].push({ nombre, tipo });
+      mostrarSubtemas();
+      document.getElementById("formCrear").style.display = "none";
+    }
+
+    function mostrarCodigo(codigo) {
+      document.getElementById("codigoUnirse").style.display = "block";
+      document.getElementById("codigoUnirse").dataset.codigo = codigo;
+    }
+
+    function unirseSubtema() {
+      const codigoIntroducido = document.getElementById("codigo").value;
+      const codigoReal = document.getElementById("codigoUnirse").dataset.codigo;
+      if (codigoIntroducido === codigoReal) {
+        alert("Te has unido correctamente al subtema.");
+        document.getElementById("codigoUnirse").style.display = "none";
+      } else {
+        alert("Código incorrecto.");
+      }
+    }
+
+    // Inicializar
+    mostrarSubtemas();
+  </script>
+</body>
+</html>
