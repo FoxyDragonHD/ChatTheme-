@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chat Theme</title>
+  <title>Foro de Temas</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -60,14 +60,14 @@
   </div>
 
   <div class="temas-lista" id="temasLista">
-    <div class="tema">Tecnología</div>
-    <div class="tema">Videojuegos</div>
-    <div class="tema">Anime</div>
-    <div class="tema">Cine y Series</div>
-    <div class="tema">Finanzas</div>
-    <div class="tema">Ciencia</div>
-    <div class="tema">Misterios</div>
-    <div class="tema">Música</div>
+    <div class="tema" onclick="abrirSubtemas('tecnologia')">Tecnología</div>
+    <div class="tema" onclick="abrirSubtemas('videojuegos')">Videojuegos</div>
+    <div class="tema" onclick="abrirSubtemas('anime')">Anime</div>
+    <div class="tema" onclick="abrirSubtemas('cine')">Cine y Series</div>
+    <div class="tema" onclick="abrirSubtemas('finanzas')">Finanzas</div>
+    <div class="tema" onclick="abrirSubtemas('ciencia')">Ciencia</div>
+    <div class="tema" onclick="abrirSubtemas('misterios')">Misterios</div>
+    <div class="tema" onclick="abrirSubtemas('musica')">Música</div>
   </div>
 
   <script>
@@ -78,6 +78,11 @@
         const texto = tema.textContent.toLowerCase();
         tema.style.display = texto.includes(input) ? "block" : "none";
       });
+    }
+
+    function abrirSubtemas(categoria) {
+      // Redirige a una página específica con la categoría en la URL
+      window.location.href = `subtemas.html?categoria=${categoria}`;
     }
   </script>
 </body>
