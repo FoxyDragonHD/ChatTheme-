@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Foro de Temas</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #121212;
+      color: #fff;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #1f1f1f;
+      padding: 1rem;
+      text-align: center;
+    }
+    h1 {
+      margin: 0;
+      font-size: 2rem;
+    }
+    .search-container {
+      display: flex;
+      justify-content: center;
+      margin: 1rem;
+    }
+    .search-container input {
+      padding: 0.5rem;
+      width: 50%;
+      border: none;
+      border-radius: 5px;
+    }
+    .temas-lista {
+      max-width: 800px;
+      margin: auto;
+      padding: 1rem;
+    }
+    .tema {
+      background-color: #1e1e1e;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+    .tema:hover {
+      background-color: #2c2c2c;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Foro Temático</h1>
+  </header>
+
+  <div class="search-container">
+    <input type="text" id="busqueda" placeholder="Buscar tema..." onkeyup="filtrarTemas()">
+  </div>
+
+  <div class="temas-lista" id="temasLista">
+    <div class="tema" onclick="irA('/subtemas.html?categoria=tecnologia')">Tecnología</div>
+    <div class="tema" onclick="irA('/subtemas.html?categoria=videojuegos')">Videojuegos</div>
+    <div class="tema" onclick="irA('/subtemas.html?categoria=anime')">Anime</div>
+    <div class="tema" onclick="irA('/subtemas.html?categoria=cine')">Cine y Series</div>
+    <div class="tema" onclick="irA('/subtemas.html?categoria=finanzas')">Finanzas</div>
+    <div class="tema" onclick="irA('/subtemas.html?categoria=ciencia')">Ciencia</div>
+    <div class="tema" onclick="irA('/subtemas.html?categoria=misterios')">Misterios</div>
+    <div class="tema" onclick="irA('/subtemas.html?categoria=musica')">Música</div>
+  </div>
+
+  <script>
+    function irA(url) {
+      window.location.href = url;
+    }
+
+    function filtrarTemas() {
+      const input = document.getElementById("busqueda").value.toLowerCase();
+      const temas = document.querySelectorAll(".tema");
+      temas.forEach(tema => {
+        const texto = tema.textContent.toLowerCase();
+        tema.style.display = texto.includes(input) ? "block" : "none";
+      });
+    }
+  </script>
+</body>
+</html>
